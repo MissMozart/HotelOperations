@@ -1,6 +1,12 @@
 package com.yearup.hotel;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 public class Employee {
+    private LocalDateTime punchInTime;
+    private LocalDateTime punchOutTime;
     private String employeeId;
     private String name;
     private String department;
@@ -11,14 +17,15 @@ public class Employee {
 
 
     // Constructor
-    public Employee(String employeeId, String name, String department, double payRate, double hoursWorked, double overtimeHours) {
+    public Employee(String employeeId, String name, String department, double payRate) {
         this.employeeId = employeeId;
         this.name = name;
         this.department = department;
         this.payRate = payRate;
-        this.hoursWorked = hoursWorked;
-        this.overtimeHours = overtimeHours;
-
+        this.hoursWorked = 0;
+        this.overtimeHours = 0;
+        this.punchInTime = LocalDateTime.now();
+        this.punchOutTime = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -48,5 +55,12 @@ public class Employee {
     }
     public double getOvertimeHours() {
         return overtimeHours;
+    }
+    public void punchIn(LocalDateTime start) {
+        this.punchInTime = start;
+    }
+    public void punchOut(LocalDateTime end) {
+        this.punchOutTime = end;
+        hoursWorked = ChronoUnit.MINUTES.between(punchInTime, punchOutTime) / 60.;
     }
 }
