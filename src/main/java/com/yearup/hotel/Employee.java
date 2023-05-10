@@ -1,6 +1,5 @@
 package com.yearup.hotel;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -53,14 +52,27 @@ public class Employee {
     public double getTotalPay() {
         return payRate * (hoursWorked + overtimeHours);
     }
+
     public double getOvertimeHours() {
         return overtimeHours;
     }
+
+    // other methods
+
     public void punchIn(LocalDateTime start) {
         this.punchInTime = start;
     }
+
+    public void punchIn() { //overloaded method using the time now.
+        this.punchInTime = LocalDateTime.now();
+    }
     public void punchOut(LocalDateTime end) {
         this.punchOutTime = end;
+        hoursWorked = ChronoUnit.MINUTES.between(punchInTime, punchOutTime) / 60.;
+    }
+
+    public void punchOut() { //overloaded method using the time now.
+        this.punchOutTime = LocalDateTime.now();
         hoursWorked = ChronoUnit.MINUTES.between(punchInTime, punchOutTime) / 60.;
     }
 }
